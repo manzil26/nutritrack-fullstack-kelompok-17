@@ -1,0 +1,106 @@
+# 🍏 NutriTrack
+
+NutriTrack is a modern, AI-powered health and nutrition tracking application that goes beyond simple calorie counting. By seamlessly integrating Google's Gemini AI, NutriTrack acts as your personal nutritionist—analyzing your logged meals, breaking down nutritional values, and helping you stay on track with your health goals.
+
+![NutriTrack Preview](https://via.placeholder.com/1200x600?text=NutriTrack+Dashboard+Preview)
+
+## ✨ Features
+
+- 🤖 **Gemini AI Nutritionist:** Simply input your meal, and the AI will analyze it to provide accurate nutritional breakdowns, including calories and macros.
+- 📊 **Interactive Dashboard:** Track your daily calories with an intuitive "Bento Grid" UI. Watch your progress update instantly without page reloads.
+- ✏️ **Seamless Profile Editing:** Update your daily calorie goals, bio, and personal information with inline editing directly from the dashboard.
+- 📱 **Fully Responsive Design:** A sleek, mobile-friendly interface built with Vite and React for optimal user experience across all devices.
+- ⚡ **Real-time Data Sync:** Ensures your meals and progress are always saved and synced using a robust backend API.
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **React.js** (via Vite)
+- **Vanilla CSS / TailwindCSS** for custom, premium styling
+- **React Router** for seamless SPA navigation
+
+### Backend & AI
+
+- **Node.js** & **Express.js** for building the REST API
+- **Google Gemini AI API** for intelligent nutritional analysis
+- **MongoDB** for secure data persistence
+
+### Hosting
+
+- **Vercel** (Frontend) with custom rewrite rules for optimal client-side routing.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- MongoDB Database (Local or MongoDB Atlas)
+- Google Gemini API Key
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yourusername/nutritrack.git
+   cd nutritrack
+   ```
+
+2. **Setup the Backend**
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+   _Create a `.env` file in the backend directory and add:_
+
+   ```env
+   PORT=5000
+   MONGO_URI=your_mongodb_connection_string
+   GEMINI_API_KEY=your_gemini_api_key
+   JWT_SECRET=your_jwt_secret
+   ```
+
+   _Start the backend server:_
+
+   ```bash
+   npm run dev
+   ```
+
+3. **Setup the Frontend**
+
+   ```bash
+   cd ../nutritrack-app
+   npm install
+   ```
+
+   _Create a `.env` file in the frontend directory and add:_
+
+   ```env
+   VITE_API_URL=http://localhost:5000/api/
+   ```
+
+   _Start the Vite development server:_
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in Browser**
+   Navigate to `http://localhost:5173` to see the app running locally.
+
+## 🔮 Future Updates
+
+- **Advanced Macro Tracking:** Breakdown of proteins, fats, and carbs.
+- **Personalized Weekly Diet Plans:** AI-generated meal plans based on individual goals.
+- **Social Sharing:** Share milestones and recipes with friends.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yourusername/nutritrack/issues) if you want to contribute.
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

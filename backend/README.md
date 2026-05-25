@@ -1,0 +1,75 @@
+# NutriTrack Backend
+
+The NutriTrack Backend is a RESTful API service built with Node.js and Express. It serves as the core system for the NutriTrack application, handling user authentication, profile management, dietary data persistence, and integration with the Gemini AI for personalized nutritional insights.
+
+## Technologies Used
+
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Database:** MongoDB (via Mongoose)
+- **AI Integration:** Google GenAI (Gemini AI Nutritionist Service)
+- **Authentication:** JSON Web Tokens (JWT) & bcryptjs
+- **Validation:** Zod
+- **Security:** Helmet, express-rate-limit
+- **Testing:** Jest, Supertest, mongodb-memory-server
+
+## Project Structure
+
+- `server.js` - Application entry point, server setup, and middleware configuration.
+- `routes/` - Express route definitions mapping endpoints to controller functions.
+- `controllers/` - Core business logic handling requests and returning responses.
+- `models/` - Mongoose database schemas and models.
+- `middleware/` - Custom middleware for authentication, error handling, etc.
+- `utils/` - Helper functions and utility modules.
+- `config/` - Configuration files and environment variable loading.
+
+## Setup and Installation
+
+1. **Clone the repository and navigate to the backend directory.**
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration:**
+   Create a `.env` file in the root of the backend directory. You will need to configure the following variables (see `.env.example` if available, or set these keys):
+   ```env
+   PORT=5000
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   GEMINI_API_KEY=your_google_gemini_api_key
+   ```
+
+4. **Run the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   The server will start on the port specified in your `.env` (default typically 5000) and will auto-reload on changes.
+
+## Available Scripts
+
+- `npm run dev`: Starts the server in development mode using `nodemon`.
+- `npm start`: Starts the server in production mode using `node`.
+- `npm test`: Runs the test suite using Jest and Supertest.
+
+## Core Features
+
+- **User Authentication:** Secure registration and login using bcrypt for password hashing and JWT for session management.
+- **Profile Management:** Dashboard data including user goals, daily calorie targets, and dynamic UI data updates.
+- **AI Chat & Nutrition Analysis:** Seamless integration with Google Gemini to analyze meal descriptions and extract structured nutritional data (calories, macros).
+- **Meal Tracking:** Saves and manages logged meals into the MongoDB database with accurate metadata.
+- **Robust Security:** Implements rate limiting and various HTTP headers (Helmet) to secure API endpoints.
+
+## Testing
+
+The backend includes a comprehensive testing setup. It uses `jest` and `supertest` for integration testing, alongside `mongodb-memory-server` to spin up a temporary in-memory database during tests without affecting production or local databases.
+
+To execute tests:
+```bash
+npm test
+```
+
+## Deployment
+
+The Node.js backend is designed to be deployed on platforms such as Render, Heroku, Railway, or standard Linux VPS environments (like cPanel with Node.js support). Ensure you set the corresponding environment variables in your production environment.
