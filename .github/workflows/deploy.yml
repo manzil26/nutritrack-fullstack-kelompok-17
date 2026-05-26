@@ -10,8 +10,8 @@ env:
   NODE_VERSION: '20'
   BACKEND_APP_NAME: 'nutritrack-backend-klp17'
   FRONTEND_APP_NAME: 'nutritrack-frontend-klp17'
-  BACKEND_URL: 'https://nutritrack-backend-klp17.azurewebsites.net'
-  FRONTEND_URL: 'https://nutritrack-frontend-klp17.azurewebsites.net'
+  BACKEND_URL: 'https://nutritrack-backend-klp17-hncma4e5hwbqarbv.southeastasia-01.azurewebsites.net'
+  FRONTEND_URL: 'https://nutritrack-frontend-klp17-dqfdh7hra0hsbxcb.southeastasia-01.azurewebsites.net'
 
 jobs:
   backend-ci:
@@ -116,7 +116,7 @@ jobs:
           package: backend
 
       - name: Wait for backend to start
-        run: sleep 45
+        run: sleep 60
 
       - name: Health check backend
         run: |
@@ -156,7 +156,7 @@ jobs:
           package: frontend-dist
 
       - name: Wait for frontend to start
-        run: sleep 45
+        run: sleep 60
 
       - name: Health check frontend
         run: |
