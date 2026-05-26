@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SavedMealCard from "../components/SavedMealCard";
 import { mealsApi } from "../api/meals";
 import { toast } from "../utils/toast";
@@ -20,7 +20,7 @@ export default function Meals() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchMeals = async () => {
+  const fetchMeals = useCallback(async () => {
     setLoading(true);
     try {
       const data = await mealsApi.searchMeals(searchQuery);
@@ -31,12 +31,12 @@ export default function Meals() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchQuery]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => fetchMeals(), 300);
     return () => clearTimeout(timeoutId);
-  }, [searchQuery]);
+  }, [fetchMeals]);
 
   const handleCreateMeal = async (e) => {
     e.preventDefault();
@@ -132,7 +132,7 @@ export default function Meals() {
           <div className="relative bg-white rounded-3xl w-full max-w-md p-6 md:p-8 shadow-2xl animate-in zoom-in-95 fade-in duration-300 max-h-[90vh] overflow-y-auto no-scrollbar">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold font-headline">New Recipe</h3>
-              <button 
+              <button
                 onClick={() => setShowAddModal(false)}
                 className="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center transition-colors"
               >
@@ -143,69 +143,69 @@ export default function Meals() {
             <form onSubmit={handleCreateMeal} className="space-y-5">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-wider">Meal Name</label>
-                <input 
+                <input
                   required
                   placeholder="e.g. Avocado Toast"
                   className="w-full px-5 py-3 bg-slate-50 border border-transparent focus:border-primary/20 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all outline-none text-sm"
                   value={newMeal.name}
-                  onChange={e => setNewMeal({...newMeal, name: e.target.value})}
+                  onChange={e => setNewMeal({ ...newMeal, name: e.target.value })}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-wider">Calories</label>
-                  <input 
+                  <input
                     type="number" required
                     placeholder="kcal"
                     className="w-full px-5 py-3 bg-slate-50 border border-transparent focus:border-primary/20 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all outline-none text-sm"
                     value={newMeal.calories}
-                    onChange={e => setNewMeal({...newMeal, calories: e.target.value})}
+                    onChange={e => setNewMeal({ ...newMeal, calories: e.target.value })}
                   />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-wider">Protein (g)</label>
-                  <input 
+                  <input
                     type="number" required
                     placeholder="grams"
                     className="w-full px-5 py-3 bg-slate-50 border border-transparent focus:border-primary/20 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all outline-none text-sm"
                     value={newMeal.protein}
-                    onChange={e => setNewMeal({...newMeal, protein: e.target.value})}
+                    onChange={e => setNewMeal({ ...newMeal, protein: e.target.value })}
                   />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-wider">Carbs (g)</label>
-                  <input 
+                  <input
                     type="number" required
                     placeholder="grams"
                     className="w-full px-5 py-3 bg-slate-50 border border-transparent focus:border-primary/20 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all outline-none text-sm"
                     value={newMeal.carbs}
-                    onChange={e => setNewMeal({...newMeal, carbs: e.target.value})}
+                    onChange={e => setNewMeal({ ...newMeal, carbs: e.target.value })}
                   />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-wider">Fat (g)</label>
-                  <input 
+                  <input
                     type="number" required
                     placeholder="grams"
                     className="w-full px-5 py-3 bg-slate-50 border border-transparent focus:border-primary/20 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all outline-none text-sm"
                     value={newMeal.fat}
-                    onChange={e => setNewMeal({...newMeal, fat: e.target.value})}
+                    onChange={e => setNewMeal({ ...newMeal, fat: e.target.value })}
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold uppercase text-slate-400 ml-1 tracking-wider">Image URL</label>
-                <input 
+                <input
                   placeholder="https://images.unsplash.com/..."
                   className="w-full px-5 py-3 bg-slate-50 border border-transparent focus:border-primary/20 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all outline-none text-sm"
                   value={newMeal.image}
-                  onChange={e => setNewMeal({...newMeal, image: e.target.value})}
+                  onChange={e => setNewMeal({ ...newMeal, image: e.target.value })}
                 />
               </div>
 
-              <button 
+              <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full py-4 bg-primary text-white rounded-2xl font-bold text-base hover:shadow-xl hover:shadow-primary/20 transition-all active:scale-95 disabled:opacity-50 mt-2 shadow-lg shadow-primary/10"

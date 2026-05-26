@@ -72,7 +72,7 @@ export default function Profile() {
       setProfile(prev => ({ ...prev, avatar: tempAvatar }));
       setIsEditingAvatar(false);
       toast("Profile picture updated!");
-    } catch (err) {
+    } catch {
       toast("Failed to update avatar", "error");
       setIsEditingAvatar(false);
     }
@@ -94,7 +94,7 @@ export default function Profile() {
       setProfile(prev => ({ ...prev, dailyGoal: Number(tempGoal) }));
       setIsEditingGoal(false);
       toast("Daily goal updated!");
-    } catch (err) {
+    } catch {
       toast("Failed to update goal", "error");
       setIsEditingGoal(false);
     }
@@ -124,13 +124,13 @@ export default function Profile() {
     try {
       const updates = isName ? { name: newValue } : { bio: newValue };
       await profileApi.updateProfile(updates);
-      setProfile(prev => ({ 
-        ...prev, 
-        [isName ? 'name' : 'description']: newValue 
+      setProfile(prev => ({
+        ...prev,
+        [isName ? 'name' : 'description']: newValue
       }));
       setter(false);
       toast(`${isName ? 'Name' : 'Bio'} updated!`);
-    } catch (err) {
+    } catch {
       toast(`Failed to update ${isName ? 'Name' : 'Bio'}`, "error");
       setter(false);
     }
@@ -152,7 +152,7 @@ export default function Profile() {
           <div>
             <span className="text-[0.75rem] font-medium tracking-[0.02em] uppercase text-primary mb-2 block">Account Dashboard</span>
             {isEditingName ? (
-              <input 
+              <input
                 autoFocus
                 className="text-[3.5rem] font-bold font-headline leading-[1.1] tracking-[-0.04em] text-on-surface bg-surface-container-high rounded-2xl w-full outline-none px-4 mb-2 focus:ring-4 focus:ring-primary/20 transition-all border-none"
                 value={tempName}
@@ -164,7 +164,7 @@ export default function Profile() {
                 }}
               />
             ) : (
-              <h1 
+              <h1
                 onClick={() => handleUpdateInfo('name')}
                 className="text-[3.5rem] font-bold font-headline leading-[1.1] tracking-[-0.04em] text-on-surface cursor-pointer hover:text-primary transition-colors"
               >
@@ -173,7 +173,7 @@ export default function Profile() {
             )}
 
             {isEditingBio ? (
-              <textarea 
+              <textarea
                 autoFocus
                 className="text-on-surface-variant font-body mt-2 w-full bg-surface-container-high rounded-2xl outline-none px-4 py-2 focus:ring-4 focus:ring-primary/20 transition-all border-none resize-none h-24"
                 value={tempBio}
@@ -185,7 +185,7 @@ export default function Profile() {
                 }}
               />
             ) : (
-              <p 
+              <p
                 onClick={() => handleUpdateInfo('bio')}
                 className="text-on-surface-variant font-body mt-2 max-w-md cursor-pointer hover:text-primary transition-colors"
               >
@@ -195,13 +195,13 @@ export default function Profile() {
           </div>
           <div className="relative group self-start md:self-auto">
             <div className="w-32 h-32 rounded-[2rem] overflow-hidden bg-surface-container-high shadow-xl ring-4 ring-surface relative">
-              <img 
-                alt="User Profile" 
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+              <img
+                alt="User Profile"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 src={profile.avatar}
               />
             </div>
-            <button 
+            <button
               onClick={handleUpdateAvatar}
               className="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-full shadow-lg hover:scale-110 active:scale-95 transition-all flex items-center justify-center z-10"
             >
@@ -211,7 +211,7 @@ export default function Profile() {
             {isEditingAvatar && (
               <div className="absolute top-full right-0 mt-4 w-64 bg-white/80 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-white/20 z-[60] animate-in zoom-in-95 fade-in duration-300">
                 <p className="text-[10px] font-bold uppercase text-slate-400 mb-2 ml-1 tracking-wider">Image URL</p>
-                <input 
+                <input
                   autoFocus
                   placeholder="https://..."
                   className="w-full px-4 py-2 bg-white border border-outline-variant/30 rounded-xl text-xs outline-none focus:ring-4 focus:ring-primary/10 transition-all mb-2"
@@ -246,7 +246,7 @@ export default function Profile() {
             </div>
             <div className="flex items-baseline gap-4 mb-8">
               {isEditingGoal ? (
-                <input 
+                <input
                   autoFocus
                   type="number"
                   className="text-[4rem] font-bold font-headline tracking-tighter text-on-surface bg-surface-container-high rounded-2xl w-full max-w-[15rem] outline-none px-4 focus:ring-4 focus:ring-primary/20 transition-all border-none"
@@ -265,13 +265,13 @@ export default function Profile() {
               )}
               <span className="text-xl font-medium font-label text-on-surface-variant uppercase tracking-widest">Kcal</span>
             </div>
-            
+
             <div className="w-full bg-surface-container h-3 rounded-full overflow-hidden mb-6">
               <div className="bg-gradient-to-r from-primary to-primary-container h-full rounded-full shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-all duration-1000" style={{ width: `${profile.goalProgress}%` }}></div>
             </div>
-            
+
             <div className="flex gap-4">
-              <button 
+              <button
                 onClick={handleUpdateGoal}
                 className="px-6 py-2 rounded-full border border-outline-variant/30 text-sm font-semibold font-body hover:bg-surface-container-low transition-colors"
               >
@@ -293,16 +293,16 @@ export default function Profile() {
             <h3 className="text-xl font-headline font-semibold mb-2">Interface Theme</h3>
             <p className="text-sm font-body text-on-surface-variant">Switch between Light and Dark visual biomes.</p>
           </div>
-          
+
           <div className="mt-8 flex items-center justify-between p-2 bg-surface-container-lowest rounded-2xl">
-            <button 
+            <button
               onClick={() => handleTogglePreference('darkMode')}
               className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium shadow-sm transition-transform active:scale-95 ${!profile.preferences.darkMode ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container-highest'}`}
             >
               <span className="material-symbols-outlined text-sm">light_mode</span>
               <span className="font-body text-sm">Light</span>
             </button>
-            <button 
+            <button
               onClick={() => handleTogglePreference('darkMode')}
               className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium transition-colors active:scale-95 ${profile.preferences.darkMode ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-highest'}`}
             >
@@ -316,9 +316,9 @@ export default function Profile() {
         <div className="md:col-span-12 space-y-4">
           <h2 className="text-2xl font-bold font-headline mt-8 mb-4">Account Preferences</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
+
             {/* Pref Item 1 */}
-            <div 
+            <div
               onClick={() => handleTogglePreference('emailNotifications')}
               className="bg-surface-container-lowest p-6 rounded-[1.5rem] flex items-center justify-between group cursor-pointer hover:bg-surface-container transition-colors"
             >
@@ -337,7 +337,7 @@ export default function Profile() {
             </div>
 
             {/* Pref Item 2 */}
-            <div 
+            <div
               onClick={() => handleTogglePreference('appleHealthSync')}
               className="bg-surface-container-lowest p-6 rounded-[1.5rem] flex items-center justify-between group cursor-pointer hover:bg-surface-container transition-colors"
             >
@@ -382,7 +382,7 @@ export default function Profile() {
               </div>
               <span className="material-symbols-outlined text-outline-variant">chevron_right</span>
             </div>
-            
+
           </div>
         </div>
 
