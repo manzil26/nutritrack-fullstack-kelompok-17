@@ -17,9 +17,6 @@ env:
   FRONTEND_URL: 'https://nutritrack-frontend-klp17.azurewebsites.net'
 
 jobs:
-  # ============================================================
-  # JOB 1 - BACKEND CI
-  # ============================================================
   backend-ci:
     name: Backend CI
     runs-on: ubuntu-latest
@@ -76,9 +73,6 @@ jobs:
             !backend/.env
           retention-days: 1
 
-  # ============================================================
-  # JOB 2 - FRONTEND CI
-  # ============================================================
   frontend-ci:
     name: Frontend CI
     runs-on: ubuntu-latest
@@ -117,9 +111,6 @@ jobs:
           path: frontend/dist/
           retention-days: 1
 
-  # ============================================================
-  # JOB 3 - BACKEND CD
-  # ============================================================
   backend-cd:
     name: Backend CD - Deploy to Azure App Service
     runs-on: ubuntu-latest
@@ -142,45 +133,6 @@ jobs:
         run: npm ci --omit=dev
         working-directory: ./backend
 
-      - name: Set backend environment variables in Azure
-        uses: azure/appservice-settings@v1
-        with:
-          app-name: ${{ env.BACKEND_APP_NAME }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BACKEND }}
-          app-settings-json: |
-            [
-              {
-                "name": "NODE_ENV",
-                "value": "production",
-                "slotSetting": false
-              },
-              {
-                "name": "MONGO_URI",
-                "value": "${{ secrets.MONGO_URI }}",
-                "slotSetting": false
-              },
-              {
-                "name": "JWT_SECRET",
-                "value": "${{ secrets.JWT_SECRET }}",
-                "slotSetting": false
-              },
-              {
-                "name": "GEMINI_API_KEY",
-                "value": "${{ secrets.GEMINI_API_KEY }}",
-                "slotSetting": false
-              },
-              {
-                "name": "CLIENT_URL",
-                "value": "${{ secrets.CLIENT_URL }}",
-                "slotSetting": false
-              },
-              {
-                "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                "value": "~20",
-                "slotSetting": false
-              }
-            ]
-
       - name: Deploy backend to Azure App Service
         uses: azure/webapps-deploy@v3
         with:
@@ -189,7 +141,7 @@ jobs:
           package: ./backend
 
       - name: Wait for backend to start
-        run: sleep 30
+        run: sleep 45
 
       - name: Health check backend
         run: |
@@ -209,9 +161,6 @@ jobs:
           echo "Backend health check gagal."
           exit 1
 
-  # ============================================================
-  # JOB 4 - FRONTEND CD
-  # ============================================================
   frontend-cd:
     name: Frontend CD - Deploy to Azure Web App
     runs-on: ubuntu-latest
@@ -225,25 +174,6 @@ jobs:
           name: frontend-build
           path: dist/
 
-      - name: Set frontend environment variables in Azure
-        uses: azure/appservice-settings@v1
-        with:
-          app-name: ${{ env.FRONTEND_APP_NAME }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FRONTEND }}
-          app-settings-json: |
-            [
-              {
-                "name": "VITE_API_URL",
-                "value": "${{ secrets.VITE_API_URL }}",
-                "slotSetting": false
-              },
-              {
-                "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                "value": "~20",
-                "slotSetting": false
-              }
-            ]
-
       - name: Deploy frontend to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
@@ -252,7 +182,7 @@ jobs:
           package: ./dist
 
       - name: Wait for frontend to start
-        run: sleep 30
+        run: sleep 45
 
       - name: Health check frontend
         run: |
