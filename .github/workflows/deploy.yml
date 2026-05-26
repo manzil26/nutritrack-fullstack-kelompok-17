@@ -108,6 +108,17 @@ jobs:
         working-directory: backend
         run: npm ci --omit=dev
 
+      - name: Check backend publish profile secret
+        env:
+          AZURE_BACKEND_PUBLISH_PROFILE: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
+        run: |
+          if [ -z "$AZURE_BACKEND_PUBLISH_PROFILE" ]; then
+            echo "AZURE_BACKEND_PUBLISH_PROFILE is empty or not found."
+            echo "Please check GitHub repository secrets."
+            exit 1
+          fi
+          echo "AZURE_BACKEND_PUBLISH_PROFILE is available."
+
       - name: Deploy backend to Azure App Service
         uses: azure/webapps-deploy@v3
         with:
@@ -147,6 +158,17 @@ jobs:
         with:
           name: frontend-artifact
           path: frontend-dist
+
+      - name: Check frontend publish profile secret
+        env:
+          AZURE_FRONTEND_PUBLISH_PROFILE: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
+        run: |
+          if [ -z "$AZURE_FRONTEND_PUBLISH_PROFILE" ]; then
+            echo "AZURE_FRONTEND_PUBLISH_PROFILE is empty or not found."
+            echo "Please check GitHub repository secrets."
+            exit 1
+          fi
+          echo "AZURE_FRONTEND_PUBLISH_PROFILE is available."
 
       - name: Deploy frontend to Azure Web App
         uses: azure/webapps-deploy@v3
